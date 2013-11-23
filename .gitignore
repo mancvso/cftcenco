@@ -45,14 +45,18 @@ nosetests.xml
 ### VirtualEnv ###
 # Virtualenv
 # http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
+venv/[Bb]in
+venv/[Ii]nclude
+venv/[Ll]ib
+venv/[Ss]cripts
+venv/[Ll]ocal
+venv
 .Python
 [Bb]in
 [Ii]nclude
 [Ll]ib
 [Ss]cripts
-venv
 
 ### SublimeText ###
 # SublimeText project files
 *.sublime-workspace
-
