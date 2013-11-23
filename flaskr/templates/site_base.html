@@ -1,0 +1,148 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}CENCO | Centro de Formación Técnica{% endblock %}
+
+{% block metas %}
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+{% endblock %}
+
+{% block styles %}
+   <link href="{{ url_for('static', filename='bootstrap-cosmo.css') }}" media="all" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-default" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+      <span class="sr-only">Navegación</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='logo_icon.png') }}" width="auto" height="20px"> Cenco</a>
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class="nav navbar-nav">
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/admision">Admisión</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sedes <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li role="presentation" class="dropdown-header">Casa Central</li>
+          <li><a href="/sedes/quillota">Quillota</a></li>
+          <li role="presentation" class="divider"></li>
+          <li role="presentation" class="dropdown-header">Sedes</li>
+
+          <li><a href="/sedes/san-felipe">San Felipe</a></li>
+          <li><a href="/sedes/san-antonio">San Antonio</a></li>
+          <li><a href="/sedes/los-andes">Los Andes</a></li>
+          <li><a href="/sedes/vina-del-mar">Viña del Mar</a></li>
+        </ul>
+      </li>
+      <!-- <li><a href="/metodologia">Metodología</a></li> -->
+      <li><a href="/convenios">Convenios</a></li>
+      <!-- <li><a href="/carreras">Carreras</a></li> -->
+      <!-- <li><a href="/equipo">Equipo</a></li> -->
+      <li><a href="/sedes/quillota">Contacto</a></li>
+    </ul>
+    
+    <ul class="nav navbar-nav navbar-right">
+      <li class="active"><a href="#"><img src="{{ url_for('static', filename='university2-inverse.png') }}" width="auto" height="20px">&nbsp;<strong>Aula virtual</strong></a></li>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>
+{% endblock %}
+
+{% block content %}
+
+{% if session.logged_in %}
+  {% include "publish.snippet.html" %}
+{% endif %}
+
+<div id="wrap">
+<div class="container">
+  <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+
+      <div class="">
+        <img src="{{ url_for('static', filename='logo_540p.jpg') }}" style="width: 90%; padding-bottom: 15px; height: auto;">
+      </div>
+      <div class="clear-fix"></div>
+        
+        {% if session.logged_in %}
+          <ul class="nav nav-pills nav-stacked">
+            <li class="active">
+              <a href="/mensajes" class="list-group-item">Mensajes <span class="badge">{{ session.message_count }}</span></a>
+            </li>
+            <li><a href="#publicar" class="list-group-item" data-toggle="modal" data-target="#publish">Publicar noticia</a></li>
+            <li>
+              <a href="/logout" class="list-group-item">Cerrar sesión</a>
+            </li>
+          </ul>
+        {% endif %}
+        
+        {% block sidebar %}{% endblock %}
+        <br>
+        <form action="/mensajes" method="POST" role="form">
+          <legend>Contáctanos</legend>
+        
+          <div class="form-group">
+            <label for="name">Nombre</label>
+            <input type="text" class="form-control input-sm" id="name" placeholder="Nombre" name="name" required="required">
+          </div>
+
+          <div class="form-group">
+            <label for="email">Correo</label>
+            <input type="email" name="email" id="input" class="form-control input-sm" required="required" title="" placeholder="e-mail">
+          </div>
+
+          <div class="form-group">
+            <label for="message">Mensaje</label>
+            <textarea name="message" class="form-control input-sm" rows="3" placeholder="Escriba aquí su mensaje" required="required"></textarea>
+          </div>
+        
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+  </div>
+  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+
+    {% block main %}{% endblock %}
+  </div>
+</div>
+</div>
+ 
+<div id="footer">
+    <div class="container">
+      <br>
+      <a class="pull-right" href="/login"><span class="glyphicon glyphicon-user"></span></a>
+    </div>
+</div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='holder.js') }}"></script>
+<style type="text/css">
+html,
+body {
+  height: 100%;
+  /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto;
+  /* Negative indent footer by its height */
+  margin: 0 auto -60px;
+  /* Pad bottom by footer height */
+  padding: 0 0 60px;
+}
+
+/* Set the fixed height of the footer here */
+#footer {
+  height: 60px;
+  background-color: #f5f5f5;
+}
+</style>
+
+{% endblock %}

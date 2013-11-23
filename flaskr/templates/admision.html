@@ -1,0 +1,124 @@
+{% extends "site_base.html" %}
+{% block main %}
+
+<style type="text/css">
+#lista-convenios .media a {
+	width: 150px;
+	height: 150px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+#lista-convenios .media a img{
+	width: 150px;
+	height: auto;
+}
+#lista-convenios .media a img.tall {
+    height: 100%;
+    width: auto;
+    margin-left: auto;
+	margin-right: auto;
+}
+</style>
+
+	<div class="page-header">
+		<h1>Convenios</h1>
+	</div>
+
+	<ul class="media-list" id="lista-convenios">
+	  
+	  <li class="media">
+	    <a class="pull-left" href="#">
+	      <img class="media-object" src="{{ url_for('static', filename='bomberos.png') }}" alt="...">
+	    </a>
+	    <div class="media-body col-xs-9 col-sm-9 col-md-9 col-lg-9">
+	      <h4 class="media-heading">Corporación cuerpo de bomberos de Viña del Mar</h4>
+	      <p>Convenio de estudios para sus asociados y familiares.</p>
+	    </div>
+	  </li>
+
+	  <li class="media">
+	    <a class="pull-left" href="#">
+	      <img class="media-object" src="{{ url_for('static', filename='imsa.png') }}" alt="...">
+	    </a>
+	    <div class="media-body">
+	      <h4 class="media-heading">Municipalidad de San Antonio</h4>
+	      <p>Convenio para uso de los campos clínicos pertenecientes a la red de salud municipal, y acceso a carreras técnicas para los funcionarios, familiares.</p>
+	    </div>
+	  </li>
+
+	  <li class="media">
+	    <a class="pull-left" href="#">
+	      <img class="media-object tall" src="{{ url_for('static', filename='imeq.png') }}" alt="...">
+	    </a>
+	    <div class="media-body">
+	      <h4 class="media-heading">Municipalidad de El Quisco</h4>
+	      <p>Convenio para uso de los campos clínicos pertenecientes a la red de salud municipal, y acceso a carreras técnicas para los funcionarios, familiares.</p>
+	    </div>
+	  </li>
+
+	  <li class="media">
+	    <a class="pull-left" href="#">
+	      <img class="media-object" src="{{ url_for('static', filename='imlc.png') }}" alt="...">
+	    </a>
+	    <div class="media-body">
+	      <h4 class="media-heading">Municipalidad de La Calera</h4>
+	      <p>Convenio para uso de los campos clínicos pertenecientes a la red de salud municipal, y acceso a carreras técnicas para los funcionarios, familiares.</p>
+	    </div>
+	  </li>
+
+	  <li class="media">
+	    <a class="pull-left" href="#">
+	      <img class="media-object" src="{{ url_for('static', filename='imn.png') }}" alt="...">
+	    </a>
+	    <div class="media-body">
+	      <h4 class="media-heading">Municipalidad de Nogales</h4>
+	      <p>Convenio para uso de los campos clínicos pertenecientes a la red de salud municipal, y acceso a carreras técnicas para los funcionarios, familiares.</p>
+	    </div>
+	  </li>
+
+	  <li class="media">
+	    <a class="pull-left" href="#">
+	      <img class="media-object tall" src="{{ url_for('static', filename='imsm.png') }}" alt="...">
+	    </a>
+	    <div class="media-body">
+	      <h4 class="media-heading">Municipalidad de Santa María</h4>
+	      <p>Convenio para uso de los campos clínicos pertenecientes a la red de salud municipal, y acceso a carreras técnicas para los funcionarios, familiares.</p>
+	    </div>
+	  </li>
+
+	  <li class="media">
+	    <a class="pull-left" href="#">
+	      <img class="media-object" src="{{ url_for('static', filename='imq.png') }}" alt="...">
+	    </a>
+	    <div class="media-body">
+	      <h4 class="media-heading">Municipalidad de Quillota</h4>
+	      <p>Convenio para uso de los campos clínicos pertenecientes a la red de salud municipal, y acceso a carreras técnicas para los funcionarios, familiares.</p>
+	    </div>
+	  </li>
+
+	  <li class="media">
+	    <a class="pull-left" href="#">
+	      <img class="media-object" src="{{ url_for('static', filename='los_leones.png') }}" alt="...">
+	    </a>
+	    <div class="media-body">
+	      <h4 class="media-heading">Clínica Los Leones</h4>
+	      <p>Convenio para uso de las instalaciones de Salud de la citada Clínica.</p>
+	    </div>
+	  </li>
+
+	  <li class="media">
+	    <a class="pull-left" href="#">
+	      <img class="media-object" src="{{ url_for('static', filename='gendarmeria.png') }}" alt="...">
+	    </a>
+	    <div class="media-body">
+	      <h4 class="media-heading">Gendarmería de Chile</h4>
+	      <p>Convenio para uso de los campos clínicos pertenecientes a la red  institucional , y acceso a carreras técnicas para los funcionarios, familiares.</p>
+	    </div>
+	  </li>
+
+
+	    
+	</ul>
+
+{% endblock %}
