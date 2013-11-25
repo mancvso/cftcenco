@@ -8,9 +8,9 @@ from flask import Flask, request, session, g, redirect, url_for, abort, render_t
 # configuration
 DATABASE = 'cenco.db'
 DEBUG = True
-SECRET_KEY = 'development key'
+SECRET_KEY = '06bd432afb9bf5895ba330a734739aba'
 USERNAME = 'admin'
-PASSWORD = 'default'
+PASSWORD = 'admin'
 
 # create our little application :)
 app = Flask(__name__)
