@@ -6,7 +6,7 @@ from flask.ext.bootstrap import Bootstrap
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, _app_ctx_stack
 
 # configuration
-DATABASE = 'flaskr.db'
+DATABASE = 'cenco.db'
 DEBUG = True
 SECRET_KEY = 'development key'
 USERNAME = 'admin'
@@ -16,7 +16,7 @@ PASSWORD = 'default'
 app = Flask(__name__)
 Bootstrap(app)
 app.config.from_object(__name__)
-app.config.from_envvar('FLASKR_SETTINGS', silent=True)
+app.config.from_envvar('CENCO_SETTINGS', silent=True)
 
 
 def init_db():
@@ -139,4 +139,4 @@ def shorten_filter(s):
 
 if __name__ == '__main__':
     init_db()
-    app.run()
+    app.run(host="0.0.0.0")
