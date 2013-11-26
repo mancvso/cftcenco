@@ -121,7 +121,11 @@ def logout():
 
 @app.route('/sedes/<string:sede>')
 def sedes_static(sede):
-    return render_template('sedes.html', sede=sede)    
+    return render_template('sedes/'+ sede +'.html', sede=sede)
+
+@app.route('/articulos/<string:articulo>')
+def articulos_static(articulo):
+    return render_template('articulos/'+ articulo +'.html', articulo=articulo)
 
 @app.route('/convenios')
 def convenios_static():
@@ -131,7 +135,6 @@ def convenios_static():
 def admision_static():
     return render_template('sedes.html')
 #    return render_template('admision.html')
-
 
 @app.template_filter('shorten')
 def shorten_filter(s):
