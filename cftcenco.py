@@ -9,8 +9,8 @@ from flask import Flask, request, session, g, redirect, url_for, abort, render_t
 DATABASE = 'cenco.db'
 DEBUG = True
 SECRET_KEY = '06bd432afb9bf5895ba330a734739aba'
-USERNAME = 'admin'
-PASSWORD = 'admin'
+USERNAME = 'cftcenco'
+PASSWORD = '941c424545d4'
 
 # create our little application :)
 app = Flask(__name__)

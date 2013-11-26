@@ -5,14 +5,19 @@
   <h1>{% block ubicacion %}{% endblock %}</h1>
 </div>
 
-<p class="lead">{% block direccion %}{% endblock %}</p>
 
 <img src="{{ url_for('static', filename='fotos/' + sede + '.jpg') }}" alt="Fotografía de la sede" class="img-thumbnail pull-left" width="400px" hoight="auto">
 
-<h2>Historia</h2>
-<p>{% block historia %}{% endblock %}</p>
-<p>{% block telefono %}{% endblock %}</p>
-<p>{% block rector %}{% endblock %}</p>
+<p class="pull-right">{% block historia %}{% endblock %}</p>
+
+<address>
+  <strong>Dirección</strong><br>
+	{% block direccion %}{% endblock %}<br>
+	{% block rector %}{% endblock %}<br>
+  <abbr title="Teléfono">T:</abbr> {% block telefono %}{% endblock %}
+</address>
+
+
 
 
 {% endblock %}

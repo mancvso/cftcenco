@@ -60,3 +60,6 @@ venv
 ### SublimeText ###
 # SublimeText project files
 *.sublime-workspace
+
+# SQLite
+*.db
