@@ -8,6 +8,7 @@
 
 {% block styles %}
    <link href="{{ url_for('static', filename='bootstrap-cosmo.css') }}" media="all" rel="stylesheet" type="text/css" />
+   <link href="{{ url_for('static', filename='bootstrap-select.min.css') }}" media="all" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block navbar %}
@@ -52,11 +53,14 @@
           <li><a href="{{ url_for('static', filename='docs/gastronomia-regular.pdf') }}">Gastronomía</a></li>
           <li><a href="{{ url_for('static', filename='docs/odontologia-regular.pdf') }}">Odontología</a></li>
           <li><a href="{{ url_for('static', filename='docs/minas.pdf') }}">Minas</a></li>
+          <li><a href="{{ url_for('static', filename='docs/riesgos.pdf') }}">Prevención de Riesgos</a></li>
           <li><a href="{{ url_for('static', filename='docs/metalurgica.pdf') }}">Metalúrgica</a></li>
           <li><a href="{{ url_for('static', filename='docs/podologia.pdf') }}">Podología</a></li>
+          <li><a href="{{ url_for('static', filename='docs/parvulos-regular.pdf') }}">Párvulos</a></li>
         </ul>
       </li>
       <!-- <li><a href="/metodologia">Metodología</a></li> -->
+      <li><a href="{{ url_for('static', filename='docs/aranceles-cenco-2014.pdf') }}">Aranceles</a></li>
       <li><a href="/convenios">Convenios</a></li>
       <!-- <li><a href="/carreras">Carreras</a></li> -->
       <!-- <li><a href="/equipo">Equipo</a></li> -->
@@ -128,14 +132,38 @@
           </div>
 
           <div class="form-group">
+            <label for="location">Sede</label>
+            <select name="location" id="input" class="selectpicker form-control">
+              <option value="quillota">Quillota</option>
+              <option value="san-felipe">San Felipe</option>
+              <option value="san-antonio">San Antonio</option>
+              <option value="los-andes">Los Andes</option>
+              <option value="vina-del-mar">Viña del Mar</option>
+            </select>
+          </div>
+
+
+
+          <div class="form-group">
             <label for="message">Mensaje</label>
             <textarea name="message" class="form-control input-sm" rows="3" placeholder="Escriba aquí su mensaje" required="required"></textarea>
           </div>
         
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary">Enviar</button>
         </form>
   </div>
   <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+    
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-info">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <p>{{ message }}</p>
+        </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
 
     {% block main %}{% endblock %}
   </div>
@@ -144,12 +172,14 @@
  
 <div id="footer">
     <div class="container">
-      <br>
-      <a class="pull-right" href="/login"><span class="glyphicon glyphicon-user"></span></a>
+      <span class="pull-right">{{ visits }} visitas &nbsp;
+        <a href="/login"><i class="glyphicon glyphicon-user"></i></a>
+      </span>
     </div>
 </div>
 
 <script type="text/javascript" src="{{ url_for('static', filename='holder.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='bootstrap-select.min.js') }}"></script>
 <style type="text/css">
 html,
 body {
@@ -174,4 +204,9 @@ body {
 }
 </style>
 
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".selectpicker").selectpicker();
+  });
+</script>
 {% endblock %}

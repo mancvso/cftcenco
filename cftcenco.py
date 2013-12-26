@@ -6,11 +6,11 @@ from flask.ext.bootstrap import Bootstrap
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, _app_ctx_stack
 
 # configuration
-DATABASE = 'cenco.db'
-DEBUG = True
+DATABASE   = 'cenco.db'
+DEBUG      = True
 SECRET_KEY = '06bd432afb9bf5895ba330a734739aba'
-USERNAME = 'cftcenco'
-PASSWORD = '941c424545d4'
+USERNAME   = 'cftcenco'
+PASSWORD   = '941c424545d4'
 
 # create our little application :)
 app = Flask(__name__)
@@ -52,14 +52,15 @@ def close_db_connection(exception):
 @app.route('/')
 def show_entries():
     db = get_db()
-    cur = db.execute('select id, title, text from entries order by id desc')
+    cur = db.execute('select id, title, text, image from entries order by id desc')
     entries = cur.fetchall()
+    add_visit()
     return render_template('show_entries.html', entries=entries)
 
 @app.route('/noticias/<int:entry_id>')
 def show_entry(entry_id):
     db = get_db()
-    cur = db.execute('select id, title, text from entries where id = ?', [entry_id])
+    cur = db.execute('select id, title, text, image, reference from entries where id = ?', [entry_id])
     entry = cur.fetchone()
     return render_template('show_entry.html', entry=entry)
 
@@ -69,46 +70,59 @@ def add_entry():
     if not session.get('logged_in'):
         abort(401)
     db = get_db()
-    db.execute('insert into entries (title, text) values (?, ?)',
-                 [request.form['title'], request.form['text']])
+    db.execute('INSERT into entries (title, text, image, reference) values (?, ?, ?, ?)',
+                 [request.form['title'], request.form['text'], request.form['image'], request.form['reference']])
     db.commit()
     flash('New entry was successfully posted')
     return redirect(url_for('show_entries'))
 
 @app.route('/mensajes', methods=['GET', 'POST'])
-def add_message():
+def messages():
     #if not session.get('logged_in'):
     #    abort(401)
     db = get_db()
     if request.method == 'POST':
-        db.execute('insert into messages (name, email, message) values (?, ?, ?)',
-                 [request.form['name'], request.form['email'], request.form['message']])
+        db.execute('insert into messages (name, email, message, location) values (?, ?, ?, ?)',
+                 [request.form['name'], request.form['email'], request.form['message'], request.form['location']])
         db.commit()
-        cur = db.execute('SELECT COUNT(*) FROM messages')
+        cur = db.execute('SELECT COUNT(*) FROM messages where read = 0')
         session['message_count'] = cur.fetchone()[0]
-        flash('Su mensaje ha sido enviado. Se le contactará a la brevedad.')
+        flash('Su mensaje ha sido enviado.')
     else:
-        cur = db.execute('SELECT id, name, email, message from messages order by id desc')
-        messages = cur.fetchall()
-        return render_template('messages.html', messages=messages)
+        cur = db.execute('SELECT id, name, email, message, location from messages where read = 0 order by id desc')
+        unread = cur.fetchall()
+        cur = db.execute('SELECT id, name, email, message, location from messages where read = 1 order by id desc')
+        read = cur.fetchall()
+        return render_template('messages.html', unread=unread, read=read)
 
     return redirect(url_for('show_entries'))
+
+@app.route('/mensajes/<int:entry_id>/archivar', methods=['GET'])
+def archive_message(entry_id):
+    if not session.get('logged_in'):
+        abort(401)
+    db = get_db()
+    db.execute('update messages set read = 1 where id = ?', [ entry_id ] )
+    db.commit()
+    cur = db.execute('SELECT COUNT(*) FROM messages where read = 0')
+    session['message_count'] = cur.fetchone()[0]
+    return redirect(url_for('messages'))
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
     if request.method == 'POST':
-        if request.form['username'] != app.config['USERNAME']:
+        if request.form['username'] != app.config['USERNAME']:    
             error = 'Invalid username'
         elif request.form['password'] != app.config['PASSWORD']:
             error = 'Invalid password'
         else:
             db = get_db()
-            cur = db.execute('SELECT COUNT(*) FROM messages')
+            cur = db.execute('SELECT COUNT(*) FROM messages where read = 0')
             session['logged_in'] = True
             session['message_count'] = cur.fetchone()[0]
-            flash('You were logged in')
+            flash( 'You were logged in' )
             return redirect(url_for('show_entries'))
     return render_template('login.html', error=error)
 
@@ -139,6 +153,25 @@ def admision_static():
 @app.template_filter('shorten')
 def shorten_filter(s):
     return s[0:97] + "..."
+
+def get_value(name):
+    db = get_db()
+    cur = db.execute('SELECT value FROM stats where name = ?', [name])
+    return cur.fetchone()[0]
+
+def set_value(name, value):
+    db = get_db()
+    cur = db.execute('UPDATE stats set value = ? where name = ?', [value, name])
+    db.commit()
+
+def add_visit():
+    db = get_db()
+    visits = get_value('visits')
+    set_value('visits', visits + 1)
+
+@app.context_processor
+def visits():
+    return dict(visits=get_value('visits'))
 
 if __name__ == '__main__':
     init_db()

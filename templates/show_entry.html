@@ -5,7 +5,13 @@
   <h1>{{ entry.title }}</h1>
 </div>
 
-<p>{{ entry.text }}</p>
+<p>
+    {% if entry.image %}
+    <img src="{{ entry.image }}" class="img-thumbnail pull-right" width="300px" hoight="auto">
+    {% endif %}
+    {{ entry.text }}
+</p>
 
+Fuente <a href="{{ entry.reference }}">{{ entry.reference }}</a>
 
 {% endblock %}

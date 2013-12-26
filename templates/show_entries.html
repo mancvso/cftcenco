@@ -3,7 +3,7 @@
 
 <div class="jumbotron">
 
-  <div class="container">
+  <div class="">
     <h1>PRAA 2013 <span class="text-muted">/</span> 2014</h1>
     <p class="lead">Programa de Reconocimiento de Aprendizajes Adquiridos</p>
     <p><a class="btn btn-primary btn-large" href="/articulos/praa">Infórmate aquí</a></p>
@@ -15,7 +15,11 @@
     {% for entry in entries %}
     <div class="col-sm-4 col-md-4">
       <div class="thumbnail">
-        <span class="glyphicon glyphicon-globe" style="margin-left: auto; margin-right: auto; width: 90%; font-size: 128px; text-align: center;"></span>
+        {% if entry.image %}
+        <span style="text-align: center;">
+          <img style="margin-left: 5%; margin-right: auto; width: 90%;" src="{{ entry.image }}" class="img-thumbnail">
+        </span>
+        {% endif %}
         <div class="caption">
           <h3>{{ entry.title }}</h3>
           <p>{{ entry.text|safe|shorten }}</p>
